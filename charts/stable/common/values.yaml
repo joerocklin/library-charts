@@ -735,7 +735,7 @@ addons:
       tag: 0.3.7
       # -- Specify the litestream image pull policy
       pullPolicy: Always
-    
+
     # -- Set litestream command line arguments.
     args:
       - replicate
