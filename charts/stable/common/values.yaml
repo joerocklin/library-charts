@@ -721,3 +721,48 @@ addons:
       capabilities:
         add:
           - NET_ADMIN
+
+  # -- The common library supports adding a litestream add-on to provide streaming backups of sqlite databases. It can be configured under this key
+  # @default -- See values.yaml
+  litestream:
+    # -- Enable running a litestream container in the pod
+    enabled: false
+
+    image:
+      # -- Specify the litestream image
+      repository: litestream/litestream
+      # -- Specify the litestream image tag
+      tag: 0.3.7
+      # -- Specify the litestream image pull policy
+      pullPolicy: Always
+    
+    # -- Set litestream command line arguments.
+    args:
+      - replicate
+
+    # -- Set any environment variables for litestream here
+    env: {}
+
+    # -- Specify a list of volumes that get mounted in the litestream container.
+    # At least 1 volumeMount is required!
+    volumeMounts: []
+    # - name: data
+    #   mountPath: /data
+    #   readOnly: true
+
+    # -- Specify a list of sqlite DBs to replicate
+    dbs: []
+    # - path: /data/db.sqlite3
+    #   replicas:
+    #     - url: s3://YOURBUCKET/db
+
+    # -- Specify where to get the access keys for S3 connections.
+    accessKeys:
+      fromSecret: false
+      secret:
+        name: litestream
+        id: LITESTREAM_ACCESS_KEY_ID
+        key: LITESTREAM_SECRET_ACCESS_KEY
+
+    metrics:
+      port: 9090

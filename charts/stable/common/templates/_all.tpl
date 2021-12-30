@@ -25,6 +25,11 @@ Main entrypoint for the common library chart. It will render all underlying temp
     {{- include "common.addon.netshoot" . }}
   {{- end -}}
 
+  {{- /* Enable litestream add-on if required */ -}}
+  {{- if .Values.addons.litestream.enabled }}
+    {{- include "common.addon.litestream" . }}
+  {{- end -}}
+
   {{ include "common.configmap" . | nindent 0 }}
 
   {{- /* Build the templates */ -}}
